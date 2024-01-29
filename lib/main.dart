@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:planning_poker_any/common/settings.dart';
+import 'package:planning_poker_any/models/query_string.model.dart';
 import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/redux/theme.reducer.dart';
@@ -114,16 +115,47 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             navigatorKey: navigatorState,
-            initialRoute: "/",
-            routes: {
-              "/": (
-                context,
-              ) =>
-                  const HomePage(),
-            },
+            initialRoute: HomePage.routeName,
+            onGenerateRoute: onGenerateRoute,
           ),
         ),
       ),
     );
+  }
+
+  Route<dynamic>? onGenerateRoute(
+    settings,
+  ) {
+    Widget? pageView;
+
+    if (settings.name != null) {
+      var uriData = Uri.parse(
+        settings.name!,
+      );
+
+      switch (uriData.path) {
+        case HomePage.routeName:
+          pageView = const HomePage();
+          break;
+      }
+    }
+
+    settings = RouteSettings(
+      name: settings.name,
+      arguments: QueryStringModel.fromMap(
+        Uri.base.queryParameters,
+      ),
+    );
+
+    if (pageView != null) {
+      return MaterialPageRoute(
+        builder: (
+          BuildContext context,
+        ) =>
+            pageView!,
+        settings: settings,
+      );
+    }
+    return null;
   }
 }
