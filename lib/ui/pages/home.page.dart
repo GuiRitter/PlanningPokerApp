@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:planning_poker_any/ui/widgets/body.widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -9,9 +10,9 @@ class HomePage extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    return const Center(
-      child: Text(
-        "Username field \n Connect button \n Peer Token field",
+    return const BodyWidget(
+      body: Text(
+        "Username field\nConnect button\nPeer Token field",
       ),
     );
   }
