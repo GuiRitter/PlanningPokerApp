@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:planning_poker_any/common/settings.dart';
 import 'package:planning_poker_any/models/state.model.dart';
@@ -7,7 +8,6 @@ import 'package:planning_poker_any/redux/theme.reducer.dart';
 import 'package:planning_poker_any/themes/dark.theme.dart';
 import 'package:planning_poker_any/themes/light.theme.dart';
 import 'package:planning_poker_any/ui/pages/home.page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
 import 'package:planning_poker_any/utils/logger.dart';
 import 'package:provider/provider.dart';
@@ -95,6 +95,7 @@ class MyApp extends StatelessWidget {
       child: StoreProvider<StateModel>(
         store: store,
         child: StoreConnector<StateModel, ThemeMode>(
+          distinct: true,
           converter: (
             store,
           ) =>

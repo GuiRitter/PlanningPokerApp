@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
   ) {
     return const Center(
       child: Text(
-        "Hello, World!",
+        "Username field \n Connect button \n Peer Token field",
       ),
     );
   }
