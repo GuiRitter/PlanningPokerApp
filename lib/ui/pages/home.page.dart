@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
 
     return BodyWidget(
       body: Text(
-        "Username field\nConnect button\n${queryString?.token}",
+        "${queryString?.userName}\nConnect button\n${queryString?.token}",
       ),
     );
   }

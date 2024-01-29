@@ -9,6 +9,7 @@ import 'package:planning_poker_any/redux/theme.reducer.dart';
 import 'package:planning_poker_any/themes/dark.theme.dart';
 import 'package:planning_poker_any/themes/light.theme.dart';
 import 'package:planning_poker_any/ui/pages/home.page.dart';
+import 'package:planning_poker_any/ui/pages/pointing.page.dart';
 import 'package:planning_poker_any/utils/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
@@ -128,34 +129,28 @@ class MyApp extends StatelessWidget {
   ) {
     Widget? pageView;
 
-    if (settings.name != null) {
-      var uriData = Uri.parse(
-        settings.name!,
-      );
-
-      switch (uriData.path) {
-        case HomePage.routeName:
-          pageView = const HomePage();
-          break;
-      }
-    }
+    final queryString = QueryStringModel.fromMap(
+      Uri.base.queryParameters,
+    );
 
     settings = RouteSettings(
       name: settings.name,
-      arguments: QueryStringModel.fromMap(
-        Uri.base.queryParameters,
-      ),
+      arguments: queryString,
     );
 
-    if (pageView != null) {
-      return MaterialPageRoute(
-        builder: (
-          BuildContext context,
-        ) =>
-            pageView!,
-        settings: settings,
-      );
+    if ((queryString.userName?.isNotEmpty ?? false) &&
+        (queryString.token?.isNotEmpty ?? false)) {
+      pageView = const PointingPage();
+    } else {
+      pageView = const HomePage();
     }
-    return null;
+
+    return MaterialPageRoute(
+      builder: (
+        BuildContext context,
+      ) =>
+          pageView!,
+      settings: settings,
+    );
   }
 }

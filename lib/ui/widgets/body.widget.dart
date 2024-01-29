@@ -3,10 +3,12 @@ import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
 
 class BodyWidget extends StatelessWidget {
   final Widget body;
+  final Widget? appBarLeading;
 
   const BodyWidget({
     super.key,
     required this.body,
+    this.appBarLeading,
   });
 
   @override
@@ -20,7 +22,9 @@ class BodyWidget extends StatelessWidget {
     final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
 
     return Scaffold(
-      appBar: const AppBarCustomWidget(),
+      appBar: AppBarCustomWidget(
+        appBarLeading: appBarLeading,
+      ),
       body: Padding(
         padding: EdgeInsets.all(
           fieldPadding,
