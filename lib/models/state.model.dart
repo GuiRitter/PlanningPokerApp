@@ -13,8 +13,8 @@ class StateModel {
     required this.isConnected,
   });
 
-  StateModel withThemeMode({
-    required ThemeMode themeMode,
+  StateModel withIsConnected({
+    required bool isConnected,
   }) =>
       StateModel(
         themeMode: themeMode,
@@ -23,8 +23,8 @@ class StateModel {
         isConnected: isConnected,
       );
 
-  StateModel withIsConnected({
-    required bool isConnected,
+  StateModel withThemeMode({
+    required ThemeMode themeMode,
   }) =>
       StateModel(
         themeMode: themeMode,

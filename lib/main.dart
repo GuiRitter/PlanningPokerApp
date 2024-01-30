@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final _log = logger("main");
-
 void main() {
   final store = Store<StateModel>(
     reducer,
@@ -32,6 +30,8 @@ void main() {
     ),
   );
 }
+
+final _log = logger("main");
 
 class MyApp extends StatelessWidget {
   final Store<StateModel> store;
