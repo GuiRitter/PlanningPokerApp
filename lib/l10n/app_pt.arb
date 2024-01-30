@@ -8,5 +8,6 @@
   "lightTheme": "☀ Claro",
   "systemTheme": "⚙ Sistema",
   "title": "Planning Poker",
-  "userName": "Usuário"
+  "userName": "Usuário",
+  "userNameInvalid": "Nome do usuário deve ser preenchido"
 }

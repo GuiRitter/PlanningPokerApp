@@ -1,5 +1,7 @@
 enum ActionType {
   connect,
   disconnect,
-  setTheme;
+  setTheme,
+  updateUserName,
+  updateCode;
 }

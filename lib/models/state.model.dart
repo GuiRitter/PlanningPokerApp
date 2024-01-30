@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 
 class StateModel {
   final ThemeMode themeMode;
@@ -32,4 +33,24 @@ class StateModel {
         code: code,
         isConnected: isConnected,
       );
+
+  StateModel withUsername({
+    required String? userName,
+  }) =>
+      StateModel(
+        themeMode: themeMode,
+        userName: userName,
+        code: code,
+        isConnected: isConnected,
+      );
+
+  static bool selectIsConnected(
+    Store<StateModel> store,
+  ) =>
+      store.state.isConnected;
+
+  static String selectUserNameNotNull(
+    Store<StateModel> store,
+  ) =>
+      store.state.userName ?? "";
 }

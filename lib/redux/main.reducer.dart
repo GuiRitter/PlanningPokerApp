@@ -24,15 +24,19 @@ StateModel reducer(
   dynamic action,
 ) =>
     {
-      ActionType.connect: () => connect(
+      ActionType.connect: () => setConnected(
             stateModel: stateModel,
             action: action,
           ),
-      ActionType.disconnect: () => disconnect(
+      ActionType.disconnect: () => setDisconnected(
             stateModel: stateModel,
             action: action,
           ),
       ActionType.setTheme: () => setTheme(
+            stateModel: stateModel,
+            action: action,
+          ),
+      ActionType.updateUserName: () => setUserName(
             stateModel: stateModel,
             action: action,
           ),

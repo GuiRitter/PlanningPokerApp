@@ -2,7 +2,7 @@ import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/redux/action.model.dart';
 import 'package:planning_poker_any/redux/action.type.dart';
 
-StateModel connect({
+StateModel setConnected({
   required StateModel stateModel,
   required ConnectAction action,
 }) =>
@@ -10,12 +10,20 @@ StateModel connect({
       isConnected: true,
     );
 
-StateModel disconnect({
+StateModel setDisconnected({
   required StateModel stateModel,
   required DisconnectAction action,
 }) =>
     stateModel.withIsConnected(
       isConnected: false,
+    );
+
+StateModel setUserName({
+  required StateModel stateModel,
+  required UpdateUserNameAction action,
+}) =>
+    stateModel.withUsername(
+      userName: action.userName,
     );
 
 class ConnectAction extends ActionModel {
@@ -27,5 +35,14 @@ class ConnectAction extends ActionModel {
 class DisconnectAction extends ActionModel {
   const DisconnectAction({
     super.type = ActionType.disconnect,
+  });
+}
+
+class UpdateUserNameAction extends ActionModel {
+  final String? userName;
+
+  const UpdateUserNameAction({
+    super.type = ActionType.updateUserName,
+    required this.userName,
   });
 }

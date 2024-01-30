@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:planning_poker_any/models/connection.model.dart';
 import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/ui/pages/home.page.dart';
 import 'package:planning_poker_any/ui/pages/pointing.page.dart';
@@ -13,17 +12,16 @@ class TabsPage extends StatelessWidget {
   @override
   Widget build(
     BuildContext context,
-  ) {
-    return StoreConnector<StateModel, ConnectionModel>(
-      distinct: true,
-      converter: ConnectionModel.selector,
-      builder: connectorBuilder,
-    );
-  }
+  ) =>
+      StoreConnector<StateModel, bool>(
+        distinct: true,
+        converter: StateModel.selectIsConnected,
+        builder: connectorBuilder,
+      );
 
   Widget connectorBuilder(
     BuildContext context,
-    ConnectionModel store,
+    bool isConnected,
   ) =>
-      store.isConnected ? const PointingPage() : const HomePage();
+      isConnected ? const PointingPage() : HomePage();
 }
