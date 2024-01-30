@@ -21,7 +21,7 @@ void main() {
     initialState: const StateModel(
       themeMode: ThemeMode.system,
       userName: null,
-      token: null,
+      code: null,
       isConnected: false,
     ),
   );

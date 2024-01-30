@@ -33,7 +33,7 @@ class TabsPage extends StatelessWidget {
   ) =>
       ConnectionModel(
         userName: store.state.userName,
-        token: store.state.token,
+        code: store.state.code,
         isConnected: store.state.isConnected,
       );
 }

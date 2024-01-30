@@ -67,8 +67,8 @@ class HomePage extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    labelText: l10n.token,
-                    hintText: l10n.token,
+                    labelText: l10n.code,
+                    hintText: l10n.code,
                   ),
                 ),
               ),

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class StateModel {
   final ThemeMode themeMode;
   final String? userName;
-  final String? token;
+  final String? code;
   final bool isConnected;
 
   const StateModel({
     required this.themeMode,
     required this.userName,
-    required this.token,
+    required this.code,
     required this.isConnected,
   });
 
@@ -19,7 +19,7 @@ class StateModel {
       StateModel(
         themeMode: themeMode,
         userName: userName,
-        token: token,
+        code: code,
         isConnected: isConnected,
       );
 
@@ -29,7 +29,7 @@ class StateModel {
       StateModel(
         themeMode: themeMode,
         userName: userName,
-        token: token,
+        code: code,
         isConnected: isConnected,
       );
 }

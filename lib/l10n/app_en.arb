@@ -2,11 +2,11 @@
   "appTheme": "🎨 App theme",
   "cancel": "Cancel",
   "chooseTheme": "Choose the app''s theme:",
+  "code": "Code",
   "connect": "Connect",
   "darkTheme": "🌙 Dark",
   "lightTheme": "☀ Light",
   "systemTheme": "⚙ System",
   "title": "Planning Poker",
-  "token": "Token",
   "userName": "User name"
 }
