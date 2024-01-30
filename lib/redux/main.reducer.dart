@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/redux/action.model.dart';
 import 'package:planning_poker_any/redux/action.type.dart';
-import 'package:planning_poker_any/redux/pointing.reducer.dart';
+import 'package:planning_poker_any/redux/connection.reducer.dart';
 import 'package:planning_poker_any/redux/theme.reducer.dart';
 import 'package:provider/provider.dart';
 

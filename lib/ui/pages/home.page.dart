@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:planning_poker_any/redux/main.reducer.dart';
-import 'package:planning_poker_any/redux/pointing.reducer.dart';
+import 'package:planning_poker_any/redux/connection.reducer.dart';
 import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
 
 class HomePage extends StatelessWidget {
