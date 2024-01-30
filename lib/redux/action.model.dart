@@ -7,3 +7,24 @@ class ActionModel {
     required this.type,
   });
 }
+
+class ConnectAction extends ActionModel {
+  const ConnectAction({
+    super.type = ActionType.connect,
+  });
+}
+
+class DisconnectAction extends ActionModel {
+  const DisconnectAction({
+    super.type = ActionType.disconnect,
+  });
+}
+
+class UpdateUserNameAction extends ActionModel {
+  final String? userName;
+
+  const UpdateUserNameAction({
+    super.type = ActionType.updateUserName,
+    required this.userName,
+  });
+}

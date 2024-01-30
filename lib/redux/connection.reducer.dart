@@ -1,21 +1,34 @@
+import 'package:peerdart/peerdart.dart';
 import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/redux/action.model.dart';
-import 'package:planning_poker_any/redux/action.type.dart';
+import 'package:planning_poker_any/utils/logger.dart';
+import 'package:planning_poker_any/utils/uuid.dart';
 
-StateModel setConnected({
+final _log = logger("connection.reducer");
+
+StateModel connect({
   required StateModel stateModel,
   required ConnectAction action,
-}) =>
-    stateModel.withIsConnected(
-      isConnected: true,
-    );
+}) {
+  final id = generateUuid();
+
+  final Peer peer = Peer(
+    id: id,
+  );
+
+  _log("connect").raw("id", peer.id).print();
+
+  return stateModel.withPeerManager(
+    peerManager: peer,
+  );
+}
 
 StateModel setDisconnected({
   required StateModel stateModel,
   required DisconnectAction action,
 }) =>
-    stateModel.withIsConnected(
-      isConnected: false,
+    stateModel.withPeerManager(
+      peerManager: null,
     );
 
 StateModel setUserName({
@@ -25,24 +38,3 @@ StateModel setUserName({
     stateModel.withUsername(
       userName: action.userName,
     );
-
-class ConnectAction extends ActionModel {
-  const ConnectAction({
-    super.type = ActionType.connect,
-  });
-}
-
-class DisconnectAction extends ActionModel {
-  const DisconnectAction({
-    super.type = ActionType.disconnect,
-  });
-}
-
-class UpdateUserNameAction extends ActionModel {
-  final String? userName;
-
-  const UpdateUserNameAction({
-    super.type = ActionType.updateUserName,
-    required this.userName,
-  });
-}

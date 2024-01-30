@@ -20,7 +20,7 @@ void main() {
       themeMode: ThemeMode.system,
       userName: null,
       code: null,
-      isConnected: false,
+      peerManager: null,
     ),
   );
 

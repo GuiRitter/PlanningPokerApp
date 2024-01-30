@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:planning_poker_any/models/state.model.dart';
-import 'package:planning_poker_any/redux/connection.reducer.dart';
+import 'package:planning_poker_any/redux/action.model.dart';
 import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
 import 'package:planning_poker_any/utils/validation.dart';
@@ -107,11 +107,6 @@ class HomePage extends StatelessWidget {
                       hintText: l10n.code,
                     ),
                   ),
-                ),
-                StoreConnector<StateModel, String>(
-                  distinct: true,
-                  converter: (store) => store.state.userName ?? "",
-                  builder: (context, vm) => Text(vm),
                 ),
               ],
             ),

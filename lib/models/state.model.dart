@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:peerdart/peerdart.dart';
 import 'package:redux/redux.dart';
 
 class StateModel {
   final ThemeMode themeMode;
   final String? userName;
   final String? code;
-  final bool isConnected;
+  final Peer? peerManager;
 
   const StateModel({
     required this.themeMode,
     required this.userName,
     required this.code,
-    required this.isConnected,
+    required this.peerManager,
   });
 
-  StateModel withIsConnected({
-    required bool isConnected,
+  StateModel withPeerManager({
+    required Peer? peerManager,
   }) =>
       StateModel(
         themeMode: themeMode,
         userName: userName,
         code: code,
-        isConnected: isConnected,
+        peerManager: peerManager,
       );
 
   StateModel withThemeMode({
@@ -31,7 +32,7 @@ class StateModel {
         themeMode: themeMode,
         userName: userName,
         code: code,
-        isConnected: isConnected,
+        peerManager: peerManager,
       );
 
   StateModel withUsername({
@@ -41,13 +42,13 @@ class StateModel {
         themeMode: themeMode,
         userName: userName,
         code: code,
-        isConnected: isConnected,
+        peerManager: peerManager,
       );
 
   static bool selectIsConnected(
     Store<StateModel> store,
   ) =>
-      store.state.isConnected;
+      store.state.peerManager != null;
 
   static String selectUserNameNotNull(
     Store<StateModel> store,
