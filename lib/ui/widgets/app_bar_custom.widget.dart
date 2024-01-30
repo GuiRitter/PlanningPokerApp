@@ -125,8 +125,11 @@ _onHomePopupMenuItemPressed({
 
 class AppBarCustomWidget extends StatelessWidget
     implements PreferredSizeWidget {
+  final Widget? appBarLeading;
+
   const AppBarCustomWidget({
     super.key,
+    this.appBarLeading,
   });
 
   @override
@@ -172,6 +175,7 @@ class AppBarCustomWidget extends StatelessWidget
     return AppBar(
       key: appBarKey,
       title: title,
+      leading: appBarLeading,
       actions: [
         PopupMenuButton<AppBarPopupMenuEnum>(
           itemBuilder: (

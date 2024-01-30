@@ -16,6 +16,6 @@ StateModel setTheme({
   required StateModel stateModel,
   required SetThemeAction action,
 }) =>
-    stateModel.copyWith(
+    stateModel.withThemeMode(
       themeMode: action.themeMode,
     );

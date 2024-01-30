@@ -1,9 +1,12 @@
 {
   "cancel": "Cancelar",
   "chooseTheme": "Escolha o tema do aplicativo:",
+  "connect": "Conectar",
   "darkTheme": "🌙 Escuro",
   "appTheme": "🎨 Tema do apl.",
   "lightTheme": "☀ Claro",
   "systemTheme": "⚙ Sistema",
-  "title": "Planning Poker"
+  "title": "Planning Poker",
+  "token": "Token",
+  "userName": "Usuário"
 }

@@ -7,8 +7,7 @@ import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/redux/theme.reducer.dart';
 import 'package:planning_poker_any/themes/dark.theme.dart';
 import 'package:planning_poker_any/themes/light.theme.dart';
-import 'package:planning_poker_any/ui/pages/home.page.dart';
-import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
+import 'package:planning_poker_any/ui/pages/tabs.page.dart';
 import 'package:planning_poker_any/utils/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
@@ -21,6 +20,9 @@ void main() {
     reducer,
     initialState: const StateModel(
       themeMode: ThemeMode.system,
+      userName: null,
+      token: null,
+      isConnected: false,
     ),
   );
 
@@ -69,12 +71,6 @@ class MyApp extends StatelessWidget {
       },
     );
 
-    final theme = Theme.of(
-      context,
-    );
-
-    final fieldPadding = theme.textTheme.labelLarge?.fontSize ?? 0.0;
-
     final themeLight = light(
       context: context,
     );
@@ -118,15 +114,7 @@ class MyApp extends StatelessWidget {
             theme: themeLight,
             darkTheme: themeDark,
             themeMode: themeMode,
-            home: Scaffold(
-              appBar: const AppBarCustomWidget(),
-              body: Padding(
-                padding: EdgeInsets.all(
-                  fieldPadding,
-                ),
-                child: const HomePage(),
-              ),
-            ),
+            home: const TabsPage(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             navigatorKey: navigatorState,

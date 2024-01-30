@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:planning_poker_any/common/settings.dart';
 import 'package:planning_poker_any/models/state.model.dart';
+import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/redux/theme.reducer.dart';
 import 'package:planning_poker_any/utils/logger.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final _log = logger("ThemeOptionWidget");
@@ -51,15 +51,11 @@ class ThemeOptionWidget extends StatelessWidget {
   onThemeTapped({
     required BuildContext context,
     required ThemeMode themeMode,
-    // required dynamic Function(
-    //   dynamic action,
-    // ) dispatch,
   }) {
     _log("onThemeTapped").enum_("themeMode", themeMode).print();
 
-    final dispatch = Provider.of<dynamic Function(dynamic)>(
-      context,
-      listen: false,
+    final dispatch = getDispatch(
+      context: context,
     );
 
     dispatch(
