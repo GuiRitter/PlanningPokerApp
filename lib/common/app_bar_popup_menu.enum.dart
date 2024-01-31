@@ -1,3 +1,4 @@
 enum AppBarPopupMenuEnum {
+  share,
   theme;
 }

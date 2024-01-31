@@ -33,6 +33,21 @@ void main() {
 
 final _log = logger("main");
 
+void showSnackBar({
+  required String? message,
+}) {
+  _log("showSnackBar").raw("message", message).print();
+
+  snackState.currentState!.showSnackBar(
+    SnackBar(
+      showCloseIcon: true,
+      content: Text(
+        message ?? "",
+      ),
+    ),
+  );
+}
+
 class MyApp extends StatelessWidget {
   final Store<StateModel> store;
 
@@ -118,6 +133,7 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             navigatorKey: navigatorState,
+            scaffoldMessengerKey: snackState,
           ),
         ),
       ),

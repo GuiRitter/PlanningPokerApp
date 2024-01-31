@@ -12,6 +12,23 @@ final GlobalKey appBarKey = GlobalKey();
 
 final _log = logger("appBarCustom");
 
+PopupMenuItem<AppBarPopupMenuEnum> buildPopupMenuItem({
+  required String label,
+  required IconData icon,
+  required AppBarPopupMenuEnum menuEnum,
+}) =>
+    PopupMenuItem<AppBarPopupMenuEnum>(
+      value: menuEnum,
+      child: ListTile(
+        leading: Icon(
+          icon,
+        ),
+        title: Text(
+          label,
+        ),
+      ),
+    );
+
 Future<double> getAppBarElevation({
   required int delay,
 }) async {
@@ -63,73 +80,23 @@ String? _getSubtitle() {
   return null;
 }
 
-_onHomePopupMenuItemPressed({
-  required BuildContext context,
-  required AppBarPopupMenuEnum value,
-}) {
-  _log("onHomePopupMenuItemPressed").enum_("value", value).print();
-
-  final l10n = AppLocalizations.of(
-    context,
-  )!;
-
-  switch (value) {
-    case AppBarPopupMenuEnum.theme:
-      showDialog(
-        context: context,
-        builder: (
-          context,
-        ) {
-          final optionList = [
-            ThemeOptionWidget(
-              themeMode: ThemeMode.dark,
-              title: l10n.darkTheme,
-            ),
-            ThemeOptionWidget(
-              themeMode: ThemeMode.light,
-              title: l10n.lightTheme,
-            ),
-            ThemeOptionWidget(
-              themeMode: ThemeMode.system,
-              title: l10n.systemTheme,
-            ),
-          ];
-
-          return AlertDialog(
-            title: Text(
-              l10n.chooseTheme,
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: optionList,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => onDialogCancelPressed(
-                  context: context,
-                ),
-                child: Text(
-                  l10n.cancel,
-                  textAlign: TextAlign.end,
-                ),
-              ),
-            ],
-          );
-        },
-      );
-      break;
-    default:
-      break;
-  }
-}
-
 class AppBarCustomWidget extends StatelessWidget
     implements PreferredSizeWidget {
   final Widget? appBarLeading;
 
+  final Map<
+      AppBarPopupMenuEnum,
+      dynamic Function(
+        BuildContext,
+      )>? onHomePopupMenuItemPressedMap;
+
+  final List<PopupMenuItem<AppBarPopupMenuEnum>>? popupMenuItemList;
+
   const AppBarCustomWidget({
     super.key,
     this.appBarLeading,
+    this.onHomePopupMenuItemPressedMap,
+    this.popupMenuItemList,
   });
 
   @override
@@ -172,6 +139,22 @@ class AppBarCustomWidget extends StatelessWidget
             ],
           );
 
+    final popupMenuItemCompleteList = <PopupMenuEntry<AppBarPopupMenuEnum>>[];
+
+    if (popupMenuItemList != null) {
+      popupMenuItemCompleteList.addAll(
+        popupMenuItemList!,
+      );
+    }
+
+    popupMenuItemCompleteList.add(
+      buildPopupMenuItem(
+        label: l10n.appTheme,
+        icon: Icons.color_lens,
+        menuEnum: AppBarPopupMenuEnum.theme,
+      ),
+    );
+
     return AppBar(
       key: appBarKey,
       title: title,
@@ -181,14 +164,7 @@ class AppBarCustomWidget extends StatelessWidget
           itemBuilder: (
             context,
           ) =>
-              [
-            PopupMenuItem<AppBarPopupMenuEnum>(
-              value: AppBarPopupMenuEnum.theme,
-              child: Text(
-                l10n.appTheme,
-              ),
-            ),
-          ],
+              popupMenuItemCompleteList,
           onSelected: (
             value,
           ) =>
@@ -198,6 +174,78 @@ class AppBarCustomWidget extends StatelessWidget
           ),
         ),
       ],
+    );
+  }
+
+  _onHomePopupMenuItemPressed({
+    required BuildContext context,
+    required AppBarPopupMenuEnum value,
+  }) {
+    _log("onHomePopupMenuItemPressed").enum_("value", value).print();
+
+    final l10n = AppLocalizations.of(
+      context,
+    )!;
+
+    final onHomePopupMenuItemPressedCompleteMap = <AppBarPopupMenuEnum,
+        dynamic Function(
+      BuildContext,
+    )>{};
+
+    if (onHomePopupMenuItemPressedMap != null) {
+      onHomePopupMenuItemPressedCompleteMap.addAll(
+        onHomePopupMenuItemPressedMap!,
+      );
+    }
+
+    onHomePopupMenuItemPressedCompleteMap[AppBarPopupMenuEnum.theme] = (
+      BuildContext context,
+    ) =>
+        showDialog(
+          context: context,
+          builder: (
+            context,
+          ) {
+            final optionList = [
+              ThemeOptionWidget(
+                themeMode: ThemeMode.dark,
+                title: l10n.darkTheme,
+              ),
+              ThemeOptionWidget(
+                themeMode: ThemeMode.light,
+                title: l10n.lightTheme,
+              ),
+              ThemeOptionWidget(
+                themeMode: ThemeMode.system,
+                title: l10n.systemTheme,
+              ),
+            ];
+
+            return AlertDialog(
+              title: Text(
+                l10n.chooseTheme,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: optionList,
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => onDialogCancelPressed(
+                    context: context,
+                  ),
+                  child: Text(
+                    l10n.cancel,
+                    textAlign: TextAlign.end,
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+
+    onHomePopupMenuItemPressedCompleteMap[value]!(
+      context,
     );
   }
 }
