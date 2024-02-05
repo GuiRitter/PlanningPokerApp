@@ -41,6 +41,10 @@ StateModel reducer(
           stateModel: stateModel,
           action: action as SetThemeAction,
         ),
+    ActionType.updateCode: () => setCode(
+          stateModel: stateModel,
+          action: action as UpdateCodeAction,
+        ),
     ActionType.updateUserName: () => setUserName(
           stateModel: stateModel,
           action: action as UpdateUserNameAction,

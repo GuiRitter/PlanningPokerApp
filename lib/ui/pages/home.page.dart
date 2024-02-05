@@ -35,6 +35,15 @@ class HomePage extends StatelessWidget {
           dispatch,
         );
 
+    onCodeChanged(
+      String codeNewValue,
+    ) =>
+        dispatch(
+          UpdateCodeAction(
+            code: codeNewValue,
+          ),
+        );
+
     onUserNameChanged(
       String userNameNewValue,
     ) =>
@@ -52,6 +61,21 @@ class HomePage extends StatelessWidget {
           errorMessage: l10n.userNameInvalid,
         );
 
+    codeFieldBuilder(
+      context,
+      code,
+    ) =>
+        TextFormField(
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: l10n.code,
+            hintText: l10n.code,
+          ),
+          onChanged: onCodeChanged,
+          initialValue: code,
+        );
+
     userNameFieldBuilder(
       context,
       userName,
@@ -67,6 +91,20 @@ class HomePage extends StatelessWidget {
           validator: userNameValidator,
           initialValue: userName,
         );
+
+    final base = Uri.base;
+
+    if (base.query.isNotEmpty) {
+      final code = base.queryParameters["code"];
+
+      if (code?.isNotEmpty ?? false) {
+        dispatch(
+          UpdateCodeAction(
+            code: code,
+          ),
+        );
+      }
+    }
 
     return Scaffold(
       appBar: const AppBarCustomWidget(),
@@ -99,13 +137,9 @@ class HomePage extends StatelessWidget {
                   dimension: fieldPadding,
                 ),
                 IntrinsicWidth(
-                  child: TextFormField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: l10n.code,
-                      hintText: l10n.code,
-                    ),
+                  child: StoreConnector<StateModel, String>(
+                    converter: StateModel.selectCodeNotNull,
+                    builder: codeFieldBuilder,
                   ),
                 ),
               ],

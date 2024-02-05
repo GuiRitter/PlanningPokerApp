@@ -31,10 +31,18 @@ StateModel setDisconnected({
       peerManager: null,
     );
 
+StateModel setCode({
+  required StateModel stateModel,
+  required UpdateCodeAction action,
+}) =>
+    stateModel.withCode(
+      code: action.code,
+    );
+
 StateModel setUserName({
   required StateModel stateModel,
   required UpdateUserNameAction action,
 }) =>
-    stateModel.withUsername(
+    stateModel.withUserName(
       userName: action.userName,
     );

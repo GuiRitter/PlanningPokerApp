@@ -20,6 +20,15 @@ class DisconnectAction extends ActionModel {
   });
 }
 
+class UpdateCodeAction extends ActionModel {
+  final String? code;
+
+  const UpdateCodeAction({
+    super.type = ActionType.updateCode,
+    required this.code,
+  });
+}
+
 class UpdateUserNameAction extends ActionModel {
   final String? userName;
 

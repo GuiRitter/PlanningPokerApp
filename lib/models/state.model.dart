@@ -35,7 +35,17 @@ class StateModel {
         peerManager: peerManager,
       );
 
-  StateModel withUsername({
+  StateModel withCode({
+    required String? code,
+  }) =>
+      StateModel(
+        themeMode: themeMode,
+        userName: userName,
+        code: code,
+        peerManager: peerManager,
+      );
+
+  StateModel withUserName({
     required String? userName,
   }) =>
       StateModel(
@@ -49,6 +59,11 @@ class StateModel {
     Store<StateModel> store,
   ) =>
       store.state.peerManager != null;
+
+  static String selectCodeNotNull(
+    Store<StateModel> store,
+  ) =>
+      store.state.code ?? "";
 
   static String selectUserNameNotNull(
     Store<StateModel> store,
