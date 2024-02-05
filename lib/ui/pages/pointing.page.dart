@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,44 +12,9 @@ import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/redux/selector.dart';
 import 'package:planning_poker_any/ui/widgets/app_bar_custom.widget.dart';
 import 'package:planning_poker_any/utils/dialogs.dart';
-import 'package:planning_poker_any/utils/logger.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 final GlobalKey listTileKey = GlobalKey();
-
-double? qRWidth;
-
-final _log = logger("PointingPage");
-
-Future<double> getQRWidth({
-  required int delay,
-}) async {
-  _log("getQRWidth").raw("delay", delay).print();
-
-  if (qRWidth != null) {
-    return qRWidth!;
-  }
-
-  await Future.delayed(
-    Duration(
-      microseconds: delay,
-    ),
-  );
-
-  final BuildContext? context = listTileKey.currentContext;
-
-  if ((context != null) && (context.mounted)) {
-    final renderBox = context.findRenderObject() as RenderBox;
-
-    qRWidth = renderBox.size.width;
-
-    return qRWidth!;
-  } else {
-    return await getQRWidth(
-      delay: delay + 1,
-    );
-  }
-}
 
 class PointingPage extends StatelessWidget {
   static const routeName = "/";
@@ -135,6 +102,16 @@ class PointingPage extends StatelessWidget {
         );
       }
 
+      final mediaQuery = MediaQuery.of(
+        context,
+      );
+
+      final qRWidth = min(
+            mediaQuery.size.width,
+            mediaQuery.size.height,
+          ) /
+          2;
+
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -151,27 +128,13 @@ class PointingPage extends StatelessWidget {
               onPressed: onCopyPressed,
             ),
           ),
-          FutureBuilder(
-            future: getQRWidth(
-              delay: 0,
+          Container(
+            color: Colors.white,
+            width: qRWidth,
+            height: qRWidth,
+            child: QrImageView(
+              data: shareLink,
             ),
-            builder: (
-              context,
-              snapshot,
-            ) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Container(
-                  color: Colors.white,
-                  width: qRWidth,
-                  height: qRWidth,
-                  child: QrImageView(
-                    data: shareLink,
-                  ),
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
           ),
         ],
       );
