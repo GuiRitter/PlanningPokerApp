@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:planning_poker_any/common/settings.dart';
+import 'package:planning_poker_any/common/settings.dart' as settings;
 import 'package:planning_poker_any/models/state.model.dart';
 import 'package:planning_poker_any/redux/main.reducer.dart';
 import 'package:planning_poker_any/redux/theme.reducer.dart';
@@ -38,7 +39,7 @@ void showSnackBar({
 }) {
   _log("showSnackBar").raw("message", message).print();
 
-  snackState.currentState!.showSnackBar(
+  settings.snackState.currentState!.showSnackBar(
     SnackBar(
       showCloseIcon: true,
       content: Text(
@@ -46,6 +47,34 @@ void showSnackBar({
       ),
     ),
   );
+}
+
+String treatDioResponse({
+  required dynamic response,
+}) {
+  if (response!.data is Map) {
+    if ((response!.data as Map).containsKey(
+      settings.error,
+    )) {
+      return response!.data[settings.error];
+    }
+  }
+  return response!.data.toString();
+}
+
+String treatException({
+  required dynamic exception,
+}) {
+  if (exception is DioException) {
+    if (exception.response != null) {
+      return treatDioResponse(
+        response: exception.response,
+      );
+    } else if (exception.message != null) {
+      return exception.message!;
+    }
+  }
+  return exception.toString();
 }
 
 class MyApp extends StatelessWidget {
@@ -66,7 +95,7 @@ class MyApp extends StatelessWidget {
       (
         prefs,
       ) {
-        final themeName = prefs.getString(themeKey);
+        final themeName = prefs.getString(settings.themeKey);
 
         _log("build SharedPreferences.getInstance")
             .raw("theme", themeName)
@@ -132,8 +161,8 @@ class MyApp extends StatelessWidget {
             home: const TabsPage(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
-            navigatorKey: navigatorState,
-            scaffoldMessengerKey: snackState,
+            navigatorKey: settings.navigatorState,
+            scaffoldMessengerKey: settings.snackState,
           ),
         ),
       ),
